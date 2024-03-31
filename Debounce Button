@@ -1,0 +1,61 @@
+`timescale 1ns/1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 05/13/2023 03:42:41 PM
+// Design Name: 
+// Module Name: deb_but
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module deb_but1 #(parameter thresold  = 1000000)
+(
+    input clk,
+    input btn,
+    output reg transmit
+    
+    ); 
+   //internal variable
+   
+   reg button_ff1 = 0;
+   reg button_ff2= 0;
+   reg [30:0]count = 0;
+   
+   // first use the  two ff to synchronize the button signal  'clk' ,clock domain
+   always @ (posedge clk)
+   begin
+   button_ff1 <= btn;
+   button_ff2 <= button_ff1;
+   end
+   //when push button is use for in or dec the counter
+   always @ (posedge clk)
+   begin 
+   if(button_ff2) //if button ff2 is high 
+   begin
+   if(~&count)
+   count <= count+1;
+   end 
+   else begin
+   if (|count)
+   count <= count - 1;
+   end 
+   if (count>thresold)   
+   transmit <= 1;
+   else 
+   transmit <= 0;
+   end
+   
+   
+endmodule
