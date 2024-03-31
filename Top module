@@ -1,0 +1,46 @@
+`timescale 1ns/1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 05/13/2023 04:45:49 PM
+// Design Name: 
+// Module Name: Top_mod
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module Top_mod(
+    input [7:0]data,
+    input clk,
+    //input transmit,
+    input reset,
+    input btn,
+    output Txd
+//    output Txd_debug,
+//    output Transmit_debug,
+//    output btn_debug,
+//    output clk_debug
+    );
+    wire transmit;
+    Txt_ua1 t1(clk, data, transmit, reset,  Txd);
+    deb_but1 d1(clk,btn, transmit);
+    
+//    assign Txd_debug = Txd ;
+//    assign Transmit_debug = transmit_out ;
+//    assign btn_debug = reset ;
+//    assign clk_debug = clk ;
+     
+    
+    
+endmodule
